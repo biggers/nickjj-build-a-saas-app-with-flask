@@ -1,0 +1,3 @@
+DEBUG = False
+
+SECRET_KEY = 'generateastrong128chartoken'
