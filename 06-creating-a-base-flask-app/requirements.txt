@@ -1,4 +1,7 @@
-Flask==0.10.1
-
-# Application server for both development and production.
-gunicorn==19.4.5
+click==6.7
+Flask==0.12.2
+gunicorn==19.7.1
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.0
+Werkzeug==0.13
