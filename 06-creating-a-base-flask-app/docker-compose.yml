@@ -13,4 +13,4 @@ services:
     volumes:
       - '.:/snakeeyes'
     ports:
-      - '8000:8000'
+      - 19999:8000
