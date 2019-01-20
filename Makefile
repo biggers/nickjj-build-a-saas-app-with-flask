@@ -33,3 +33,10 @@ clean_rmi:
 SVC = website
 clean: stop
 	${DC} rm -v ${SVC}
+
+# -------- 06-creating-a-base-flask-app
+run_06:
+	workon build_sass_flask; \
+	cd 06-creating-a-base-flask-app; \
+	export FLASK_APP='snakeeyes.app'; \
+	python -m flask run

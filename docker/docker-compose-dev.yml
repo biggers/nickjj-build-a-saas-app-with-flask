@@ -1,0 +1,34 @@
+# References:  -*-conf-*-
+#  https://docs.docker.com/compose/compose-file/#placement
+
+# alias dcf='docker-compose -f docker/docker-compose-dev.yml'2
+# dcf build
+# dcf up -d
+# dcf ps
+# dcf stop
+# dcf rm
+
+version: "3.6"
+
+services:
+
+  website:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+
+    environment:
+      PYTHONUNBUFFERED: 'true'
+      FLASK_APP: 'snakeeyes.app'
+      DEBUG: 1
+
+    command: python -m http.server 8000
+    # command: >
+    #  sh -c "python -m flask run --reload --host 0.0.0.0 --port 5000"
+
+    volumes:
+      - '..:/snakeeyes'
+
+    ports:
+      - '18000:8000'
+      - '15000:5000'
