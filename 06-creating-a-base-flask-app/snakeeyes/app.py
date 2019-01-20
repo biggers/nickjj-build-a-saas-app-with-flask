@@ -1,5 +1,7 @@
-from flask import Flask
 from pprint import pformat
+from flask import Flask
+
+app = Flask(__name__, instance_relative_config=True)
 
 def create_app():
     """
@@ -7,18 +9,18 @@ def create_app():
 
     :return: Flask app
     """
-    app = Flask(__name__, instance_relative_config=True)
-
     app.config.from_object('config.settings')
+    # import pdb; pdb.set_trace()
     # app.config.from_pyfile('settings.py', silent=False)
 
-    @app.route('/')
-    def index():
-        """
-        Render a Hello World response.
 
-        :return: Flask response
-        """
-        return "Hello ** {} **".format(vars(app))
+create_app()
 
-    return app
+@app.route('/')
+def index():
+    """
+    Render a Hello World response.
+
+    :return: Flask response
+    """
+    return "<pre>{}</pre>".format(pformat(vars(app)))
