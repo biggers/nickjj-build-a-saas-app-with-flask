@@ -35,8 +35,9 @@ clean: stop
 	${DC} rm -v ${SVC}
 
 # -------- 06-creating-a-base-flask-app
+# FIX.me - why are app.config "values" of HOST, PORT not being used
 run_06:
 	workon build_sass_flask; \
 	cd 06-creating-a-base-flask-app; \
 	export FLASK_APP='snakeeyes.app'; \
-	python -m flask run
+	python -m flask run --reload --host 127.0.0.1 --port 5000
