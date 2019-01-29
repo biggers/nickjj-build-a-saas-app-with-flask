@@ -13,7 +13,7 @@ WORKDIR $INSTALL_PATH
 RUN  groupadd -r $USER && \
     useradd -r -g $USER $USER && \
     apt-get -y update && \
-    apt-get -y install less vim-tiny netcat && \
+    apt-get -y install  netcat less vim-tiny jove make && \
     rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt requirements.txt
