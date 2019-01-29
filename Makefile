@@ -42,7 +42,7 @@ logs:
 	${DCF} logs ${LOGSF}
 
 clean_rmi:
-	docker rmi $(docker images -f "dangling=true" -q)
+	docker rmi $$(docker images -f "dangling=true" -q)
 
 SVC = website
 clean: stop
@@ -50,8 +50,10 @@ clean: stop
 
 # -------- 06-creating-a-base-flask-app
 # FIX.me - why are app.config "values" of HOST, PORT not being used
+VENV=${HOME}/.virtualenvs/build_sass_flask
 run_06:
-	workon build_sass_flask; \
+	. ${VENV}/bin/activate; \
 	cd 06-creating-a-base-flask-app; \
 	export FLASK_APP='snakeeyes.app'; \
 	python -m flask run --reload --host 127.0.0.1 --port 5000
+
