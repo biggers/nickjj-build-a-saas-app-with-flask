@@ -4,35 +4,49 @@
 
 WAIT_FOR = 5
 DC = docker-compose
-up:
-	${DC} up -d
-	sleep ${WAIT_FOR}; ${DC} ps
-
-stop:
-	${DC} stop
-
-down:
-	${DC} down --volumes --remove-orphans
-
-ps: status
-status:
-	${DC} ps
-
-LOGS = # --follow
-logs:
-	${DC} logs ${LOGS}
+DCF = docker-compose -f docker/docker-compose-dev.yml
 
 SVC = --force website
 OPTS = # --force-rm --pull
-web_build:
-	${DC} build ${OPTS} ${SVC}
+
+## ---- DEV targets
+
+run_app:
+	python -m flask run --reload --host 0.0.0.0 --port 5000
+
+# Copying, because '../' symlinks won't work
+requirements.txt:
+	cp -pav ../Makefile .
+	cp -pav ../docker .
+	cp -pav ../requirements.txt .
+
+build_dev: requirements.txt
+	${DCF} build ${OPTS} ${SVC}
+
+up:
+	${DCF} up -d
+	sleep ${WAIT_FOR}; ${DCF} logs
+
+stop:
+	${DCF} stop
+
+down:
+	${DCF} down --volumes --remove-orphans
+
+ps: status
+status:
+	${DCF} ps
+
+LOGSF = # --follow
+logs:
+	${DCF} logs ${LOGSF}
 
 clean_rmi:
 	docker rmi $(docker images -f "dangling=true" -q)
 
 SVC = website
 clean: stop
-	${DC} rm -v ${SVC}
+	${DCF} rm -v ${SVC}
 
 # -------- 06-creating-a-base-flask-app
 # FIX.me - why are app.config "values" of HOST, PORT not being used
